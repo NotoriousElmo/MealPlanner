@@ -1,0 +1,110 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<h6>Specify search properties with a (/), and corresponding values with a (,).
+    For example, for ‘Contains’ and ‘In category’, input: Contains/In category in properties, and value1,value2 in values.</h6>
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Search" class="control-label"></label>
+        <input asp-for="Search" class="form-label"/>
+        <span asp-validation-for="Search" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="InRecipeName" class="control-label"></label>
+        <input asp-for="InRecipeName" class="form-label"/>
+        <span asp-validation-for="InRecipeName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CookTime" class="control-label"></label>
+        <input asp-for="CookTime" class="form-label"/>
+        <span asp-validation-for="CookTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contains" class="control-label"></label>
+        <input asp-for="Contains" class="form-label"/>
+        <span asp-validation-for="Contains" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoesntContain" class="control-label"></label>
+        <input asp-for="DoesntContain" class="form-label"/>
+        <span asp-validation-for="DoesntContain" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="InCategory" class="control-label"></label>
+        <input asp-for="InCategory" class="form-label"/>
+        <span asp-validation-for="InCategory" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="InServingSize" class="control-label"></label>
+        <input asp-for="InServingSize" class="form-label"/>
+        <span asp-validation-for="InServingSize" class="text-danger"></span>
+    </div>
+
+    <br>
+    <div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+<br>
+<form method="post" asp-page-handler="Reset">
+    <button type="submit" class="btn btn-primary">Reset</button>
+</form>
+
+<h4>Possible Recipes</h4>
+
+<table class="table">
+    
+    <tr>
+        <td>
+            Name
+        </td>
+        <td>
+            Description
+        </td>
+        <td>
+            Servings
+        </td>
+        <td>
+            Time to make in minutes
+        </td>
+        <td>
+            Category
+        </td>
+        <td></td>
+    </tr>
+@foreach (var item in Model.Recipes)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Servings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeInMinutes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            <a asp-page="/ViewRecipe" asp-route-RecipeId="@item.Id">View Recipe</a> |
+            <a asp-page="/AddIngredient" asp-route-RecipeId="@item.Id">Add to recipe</a>
+        </td>
+    </tr>
+}
+</table>

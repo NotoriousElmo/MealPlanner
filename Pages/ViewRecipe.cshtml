@@ -1,0 +1,98 @@
+﻿@page
+@model WebApp.Pages.ViewRecipe
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>View Recipe</h1>
+
+<p>
+    <a asp-page="ChangeServings" asp-route-RecipeId="@Model.RecipeId">Change serving size</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Recipe Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                People
+            </th>
+            <th>
+                Time to cook
+            </th>
+            <th>
+                Category
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.Recipe.Name
+            </td>
+            <td>
+                @Model.Recipe.Description
+            </td>
+            <td>
+                @Model.Recipe.Servings
+            </td>
+            <td>
+                @Model.Recipe.TimeInMinutes
+            </td>
+            <td>
+                @Model.Recipe.Category
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Ingredient
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Unit
+        </th>
+        <th>
+            Instructions
+        </th>            
+        <td>
+        </td>
+        
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.RecipeIngredients) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ingredient!.Product!.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ingredient!.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ingredient!.Product!.Unit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                <a asp-page="/RecipeIngredients/Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="/RecipeIngredients/Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-page="/AddIngredient" asp-route-RecipeId="@Model.RecipeId">Add to recipe</a>
